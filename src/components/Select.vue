@@ -18,7 +18,7 @@
             <slot name="selected-option" v-bind="normalizeOptionForSlot(option)">
               {{ getOptionLabel(option) }}
             </slot>
-            <button v-if="multiple" :disabled="disabled" @click="deselect(option)" type="button" class="vs__deselect" :title="`Deselect ${getOptionLabel(option)}`" :aria-label="`Deselect ${getOptionLabel(option)}`" ref="deselectButtons">
+            <button v-if="multiple" :disabled="disabled" @click="deselect(option)" type="button" class="vs__deselect" :title="`Deselect ${getOptionLabel(option)}`" :aria-label="`Deselect ${getOptionLabel(option)}`" :ref="setDeselectButtonRef">
               <component :is="childComponents.Deselect" />
             </button>
           </span>
@@ -594,7 +594,7 @@
       onBeforeUpdate(() => (deselectButtons = []))
 
       return {
-        deselectButtons: [],
+        deselectButtons,
         setDeselectButtonRef,
         clearButton: ref(null),
         selectedOptions: ref(null),
