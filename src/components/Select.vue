@@ -598,6 +598,7 @@
         setDeselectButtonRef,
         clearButton: ref(null),
         selectedOptions: ref(null),
+        searchRef: ref(null),
       }
     },
 
@@ -781,11 +782,11 @@
         //  they dropdown state will be set in their click handlers
 
         const ignoredButtons = [
-          ...([this.deselectButtons] || []),
-          ...([this.clearButton] || []),
+          ...this.deselectButtons,
+          ...(this.clearButton ? [this.clearButton] : []),
         ];
 
-        if (this.searchEl === undefined || ignoredButtons.filter(Boolean).some(ref => ref.contains(event.target) || ref === event.target)) {
+        if (!this.searchEl || ignoredButtons.filter(Boolean).some(ref => ref.contains(event.target) || ref === event.target)) {
           event.preventDefault();
           return;
         }
@@ -1056,7 +1057,7 @@
       searchEl () {
         return !!this.$slots['search']
           ? this.selectedOptions.querySelector(this.searchInputQuerySelector)
-          : this.search;
+          : this.searchRef;
       },
 
       /**
@@ -1081,7 +1082,7 @@
               'aria-autocomplete': 'list',
               'aria-labelledby': `vs${this.uid}__combobox`,
               'aria-controls': `vs${this.uid}__listbox`,
-              'ref': 'search',
+              'ref': 'searchRef',
               'type': 'search',
               'autocomplete': this.autocomplete,
               'value': this.search,
