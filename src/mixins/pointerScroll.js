@@ -1,8 +1,16 @@
+import { ref } from 'vue'
+
 export default {
   props: {
     autoscroll: {
       type: Boolean,
       default: true
+    }
+  },
+
+  setup() {
+    return {
+      dropdownMenu: ref(null),
     }
   },
 
@@ -22,16 +30,16 @@ export default {
      * @returns {*}
      */
     maybeAdjustScroll() {
-      const optionEl = (this.$refs.dropdownMenu && this.$refs.dropdownMenu.children[this.typeAheadPointer]) || false;
+      const optionEl = (this.dropdownMenu && this.dropdownMenu.children[this.typeAheadPointer]) || false;
 
       if (optionEl) {
         const bounds = this.getDropdownViewport();
         const { top, bottom, height } = optionEl.getBoundingClientRect();
 
         if (top < bounds.top) {
-          return (this.$refs.dropdownMenu.scrollTop = optionEl.offsetTop);
+          return (this.dropdownMenu.scrollTop = optionEl.offsetTop);
         } else if (bottom > bounds.bottom) {
-          return (this.$refs.dropdownMenu.scrollTop =
+          return (this.dropdownMenu.scrollTop =
             optionEl.offsetTop - (bounds.height - height));
         }
       }
@@ -42,8 +50,8 @@ export default {
      * @returns {{top: (string|*|number), bottom: *}}
      */
     getDropdownViewport() {
-      return this.$refs.dropdownMenu
-        ? this.$refs.dropdownMenu.getBoundingClientRect()
+      return this.dropdownMenu
+        ? this.dropdownMenu.getBoundingClientRect()
         : {
             height: 0,
             top: 0,

@@ -82,6 +82,7 @@
 </template>
 
 <script type="text/babel">
+  import { ref, onBeforeUpdate } from 'vue'
   import pointerScroll from '../mixins/pointerScroll'
   import typeAheadPointer from '../mixins/typeAheadPointer'
   import ajax from '../mixins/ajax'
@@ -585,6 +586,21 @@
       }
     },
 
+    setup() {
+      let deselectButtons = []
+      const setDeselectButtonRef = el => {
+        if (el) deselectButtons.push(el)
+      }
+      onBeforeUpdate(() => (deselectButtons = []))
+
+      return {
+        deselectButtons: [],
+        setDeselectButtonRef,
+        clearButton: ref(null),
+        selectedOptions: ref(null),
+      }
+    },
+
     data() {
       return {
         uid: uniqueId(),
@@ -765,8 +781,8 @@
         //  they dropdown state will be set in their click handlers
 
         const ignoredButtons = [
-          ...([this.$refs['deselectButtons']] || []),
-          ...([this.$refs['clearButton']] || []),
+          ...([this.deselectButtons] || []),
+          ...([this.clearButton] || []),
         ];
 
         if (this.searchEl === undefined || ignoredButtons.filter(Boolean).some(ref => ref.contains(event.target) || ref === event.target)) {
@@ -1039,8 +1055,8 @@
        */
       searchEl () {
         return !!this.$slots['search']
-          ? this.$refs.selectedOptions.querySelector(this.searchInputQuerySelector)
-          : this.$refs.search;
+          ? this.selectedOptions.querySelector(this.searchInputQuerySelector)
+          : this.search;
       },
 
       /**

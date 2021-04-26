@@ -1,7 +1,7 @@
 export default {
     inserted (el, bindings, {context}) {
         if (context.appendToBody) {
-            const {height, top, left, width} = context.$refs.toggle.getBoundingClientRect();
+            const {height, top, left, width} = el.querySelector('[role=combobox]').getBoundingClientRect();
             let scrollX = window.scrollX || window.pageXOffset;
             let scrollY = window.scrollY || window.pageYOffset;
             el.unbindPosition = context.calculatePosition(el, context, {
