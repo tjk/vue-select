@@ -1082,7 +1082,7 @@
               'aria-autocomplete': 'list',
               'aria-labelledby': `vs${this.uid}__combobox`,
               'aria-controls': `vs${this.uid}__listbox`,
-              'ref': 'searchRef',
+              'ref': this.searchRef,
               'type': 'search',
               'autocomplete': this.autocomplete,
               'value': this.search,
@@ -1109,7 +1109,7 @@
           },
           openIndicator: {
             attributes: {
-              'ref': 'openIndicator',
+              'ref': 'openIndicator', // XXX not used but this shouldn't be string right?
               'role': 'presentation',
               'class': 'vs__open-indicator',
             },
