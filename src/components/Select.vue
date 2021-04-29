@@ -25,7 +25,7 @@
         </slot>
 
         <slot name="search" v-bind="scope.search">
-          <input class="vs__search" v-bind="scope.search.attributes" v-on="scope.search.events">
+          <input class="vs__search" v-bind="{...scope.search.attributes, ...scope.search.events}">
         </slot>
       </div>
 
@@ -52,7 +52,7 @@
         </slot>
       </div>
     </div>
-    <transition :name="transition">
+    <!-- TODO BaseTransition issues during setup -- no current component instance -- <transition :name="transition">-->
       <ul ref="dropdownMenu" v-if="dropdownOpen" :id="`vs${uid}__listbox`" :key="`vs${uid}__listbox`" class="vs__dropdown-menu" role="listbox" @mousedown.prevent="onMousedown" @mouseup="onMouseUp" tabindex="-1" v-append-to-body>
         <slot name="list-header" v-bind="scope.listHeader" />
         <li
@@ -76,7 +76,7 @@
         <slot name="list-footer" v-bind="scope.listFooter" />
       </ul>
       <ul v-else :id="`vs${uid}__listbox`" role="listbox" style="display: none; visibility: hidden;"></ul>
-    </transition>
+    <!--</transition>-->
     <slot name="footer" v-bind="scope.footer" />
   </div>
 </template>
@@ -588,9 +588,7 @@
 
     setup() {
       let deselectButtons = []
-      const setDeselectButtonRef = el => {
-        if (el) deselectButtons.push(el)
-      }
+      const setDeselectButtonRef = el => el && deselectButtons.push(el)
       onBeforeUpdate(() => (deselectButtons = []))
 
       return {
@@ -599,6 +597,7 @@
         clearButton: ref(null),
         selectedOptions: ref(null),
         searchRef: ref(null),
+        loading: ref(false), // XXX where is this from?!
       }
     },
 
@@ -783,7 +782,7 @@
 
         const ignoredButtons = [
           ...this.deselectButtons,
-          ...(this.clearButton ? [this.clearButton] : []),
+          this.clearButton,
         ];
 
         if (!this.searchEl || ignoredButtons.filter(Boolean).some(ref => ref.contains(event.target) || ref === event.target)) {
@@ -1082,7 +1081,7 @@
               'aria-autocomplete': 'list',
               'aria-labelledby': `vs${this.uid}__combobox`,
               'aria-controls': `vs${this.uid}__listbox`,
-              'ref': this.searchRef,
+              'ref': 'searchRef',
               'type': 'search',
               'autocomplete': this.autocomplete,
               'value': this.search,
@@ -1091,12 +1090,12 @@
               } : {}),
             },
             events: {
-              'compositionstart': () => this.isComposing = true,
-              'compositionend': () => this.isComposing = false,
-              'keydown': this.onSearchKeyDown,
-              'blur': this.onSearchBlur,
-              'focus': this.onSearchFocus,
-              'input': (e) => this.search = e.target.value,
+              'onCompositionstart': () => this.isComposing = true,
+              'onCompositionend': () => this.isComposing = false,
+              'onKeydown': this.onSearchKeyDown,
+              'onBlur': this.onSearchBlur,
+              'onFocus': this.onSearchFocus,
+              'onInput': (e) => this.search = e.target.value,
             },
           },
           spinner: {

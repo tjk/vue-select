@@ -26,7 +26,7 @@ $transition-duration: .15s;
   pointer-events: none;
   transition: opacity $transition-duration $transition-timing-function;
 }
-.vs__fade-enter,
+.vs__fade-enter-from,
 .vs__fade-leave-to {
   opacity: 0;
 }
