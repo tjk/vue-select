@@ -11862,10 +11862,10 @@ vue-jest@5.0.0-alpha.8:
     extract-from-css "^0.4.4"
     tsconfig "^7.0.0"
 
-vue-loader@^16.0.0-beta.8:
-  version "16.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.0.0-beta.8.tgz#1f523d9fea8e8c6e4f5bb99fd768165af5845879"
-  integrity sha512-oouKUQWWHbSihqSD7mhymGPX1OQ4hedzAHyvm8RdyHh6m3oIvoRF+NM45i/bhNOlo8jCnuJhaSUf/6oDjv978g==
+vue-loader@^16.1.1:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.2.0.tgz#046a53308dd47e58efe20ddec1edec027ce3b46e"
+  integrity sha512-TitGhqSQ61RJljMmhIGvfWzJ2zk9m1Qug049Ugml6QP3t0e95o0XJjk29roNEiPKJQBEi8Ord5hFuSuELzSp8Q==
   dependencies:
     chalk "^4.1.0"
     hash-sum "^2.0.0"
