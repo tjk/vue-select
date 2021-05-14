@@ -782,10 +782,10 @@
         //  don't react to click on deselect/clear buttons,
         //  they dropdown state will be set in their click handlers
 
-        const deselectButtons = this.selectedOptions && this.selectedOptions.querySelectorAll('vs__deselect')
+        const deselectButtons = this.selectedOptions && this.selectedOptions.querySelectorAll('.vs__deselect')
         const ignoredButtons = [
           // ...this.deselectButtons,
-          ...deselectButtons,
+          ...(deselectButtons || []),
           this.clearButton,
         ];
 
