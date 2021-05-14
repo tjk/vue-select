@@ -1,5 +1,6 @@
 export default {
-    inserted (el, bindings, {context}) {
+    mounted (el, binding) {
+        const context = binding.instance
         if (context.appendToBody) {
             const {height, top, left, width} = el.querySelector('[role=combobox]').getBoundingClientRect();
             let scrollX = window.scrollX || window.pageXOffset;
@@ -14,7 +15,8 @@ export default {
         }
     },
 
-    unbind (el, bindings, {context}) {
+    unmounted (el, binding) {
+        const context = binding.instance
         if (context.appendToBody) {
             if (el.unbindPosition && typeof el.unbindPosition === 'function') {
                 el.unbindPosition();

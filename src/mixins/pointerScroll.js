@@ -1,5 +1,3 @@
-import { ref } from 'vue'
-
 export default {
   props: {
     autoscroll: {
@@ -8,9 +6,9 @@ export default {
     }
   },
 
-  setup() {
+  data() {
     return {
-      dropdownMenu: ref(null),
+      dropdownMenu: null,
     }
   },
 
