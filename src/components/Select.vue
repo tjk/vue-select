@@ -18,7 +18,8 @@
             <slot name="selected-option" v-bind="normalizeOptionForSlot(option)">
               {{ getOptionLabel(option) }}
             </slot>
-            <button v-if="multiple" :disabled="disabled" @click="deselect(option)" type="button" class="vs__deselect" :title="`Deselect ${getOptionLabel(option)}`" :aria-label="`Deselect ${getOptionLabel(option)}`" :ref="setDeselectButtonRef">
+            <!-- :ref="setDeselectButtonRef" -->
+            <button v-if="multiple" :disabled="disabled" @click="deselect(option)" type="button" class="vs__deselect" :title="`Deselect ${getOptionLabel(option)}`" :aria-label="`Deselect ${getOptionLabel(option)}`">
               <component :is="childComponents.Deselect" />
             </button>
           </span>
@@ -587,13 +588,14 @@
     },
 
     setup() {
-      let deselectButtons = []
-      const setDeselectButtonRef = el => el && deselectButtons.push(el)
-      onBeforeUpdate(() => (deselectButtons = []))
+      // XXX maybe ref inside of slot is a problem...
+      // let deselectButtons = []
+      // const setDeselectButtonRef = el => el && deselectButtons.push(el)
+      // onBeforeUpdate(() => (deselectButtons = []))
 
       return {
-        deselectButtons,
-        setDeselectButtonRef,
+        // deselectButtons,
+        // setDeselectButtonRef,
         clearButton: ref(null),
         selectedOptions: ref(null),
         searchRef: ref(null),
@@ -780,8 +782,10 @@
         //  don't react to click on deselect/clear buttons,
         //  they dropdown state will be set in their click handlers
 
+        const deselectButtons = this.selectedOptions && this.selectedOptions.querySelectorAll('vs__deselect')
         const ignoredButtons = [
-          ...this.deselectButtons,
+          // ...this.deselectButtons,
+          ...deselectButtons,
           this.clearButton,
         ];
 
