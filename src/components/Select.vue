@@ -606,7 +606,7 @@
         open: false,
         isComposing: false,
         pushedTags: [],
-        _value: [] // Internal value managed by Vue Select if no `modelValue` prop is passed
+        _value: [], // Internal value managed by Vue Select if no `modelValue` prop is passed
         clearButton: null,
         selectedOptions: null,
         searchRef: null,
