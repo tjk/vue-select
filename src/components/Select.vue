@@ -83,7 +83,6 @@
 </template>
 
 <script type="text/babel">
-  import { ref, onBeforeUpdate } from 'vue'
   import pointerScroll from '../mixins/pointerScroll'
   import typeAheadPointer from '../mixins/typeAheadPointer'
   import ajax from '../mixins/ajax'
@@ -587,21 +586,18 @@
       }
     },
 
-    setup() {
-      // XXX maybe ref inside of slot is a problem...
-      // let deselectButtons = []
-      // const setDeselectButtonRef = el => el && deselectButtons.push(el)
-      // onBeforeUpdate(() => (deselectButtons = []))
+    // XXX maybe having any setup function at all is a problem
+    // setup() {
+    //   // XXX maybe ref inside of slot is a problem...
+    //   // let deselectButtons = []
+    //   // const setDeselectButtonRef = el => el && deselectButtons.push(el)
+    //   // onBeforeUpdate(() => (deselectButtons = []))
 
-      return {
-        // deselectButtons,
-        // setDeselectButtonRef,
-        clearButton: ref(null),
-        selectedOptions: ref(null),
-        searchRef: ref(null),
-        loading: ref(false), // XXX where is this from?!
-      }
-    },
+    //   return {
+    //     // deselectButtons,
+    //     // setDeselectButtonRef,
+    //   }
+    // },
 
     data() {
       return {
@@ -611,6 +607,10 @@
         isComposing: false,
         pushedTags: [],
         _value: [] // Internal value managed by Vue Select if no `modelValue` prop is passed
+        clearButton: null,
+        selectedOptions: null,
+        searchRef: null,
+        loading: false, // XXX where is this from?!
       }
     },
 
